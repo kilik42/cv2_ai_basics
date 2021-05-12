@@ -1,5 +1,5 @@
 import cv2
-import numpy
+import numpy as np
 
 print("package imported")
 # read images
@@ -35,10 +35,20 @@ print("package imported")
 
 #basic functions when building open cv projects
 img = cv2.imread("resources/images/lion.jpg")
+kernel = np.ones((5,5), np.uint8)
 imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 imgBlur = cv2.GaussianBlur(imgGray, (7,7), 0)
+imgCanny = cv2.Canny(img, 100,100)
+#dialtion make it thicker the lines
+imgDialation = cv2.dilate(imgCanny, kernel, iterations=1)
+#erosion -- make it thinner
+imgEroded = cv2.erode(imgDialation, kernel, iterations = 5)
+
 cv2.imshow("Gray image", imgGray)
 cv2.imshow("Blurred image", imgBlur)
+cv2.imshow("canny", imgCanny)
+cv2.imshow("dialation image", imgDialation)
+cv2.imshow("erosion image", imgEroded)
 cv2.waitKey(0)
 
 
